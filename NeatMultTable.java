@@ -1,7 +1,4 @@
-import java.util.Iterator;
 import java.util.Scanner;
-
-import org.omg.CORBA.PUBLIC_MEMBER;
 
 public class HalloWelt {
 
