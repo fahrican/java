@@ -11,13 +11,10 @@ public class Weekdays {
 		int inDay = date % 100, inMonth = date % 10000 / 100, inYear = date / 10000;
 		
 		if(validate(inYear, inMonth, inDay)){
-    
 			int W = weekday(inDay, inMonth, inYear);
 			String weekday = dayName(W);
 			TextIO.putf("%02d.%02d.%4d was/is or will be a %s", date % 100, date % 10000 / 100, date / 10000, weekday);
-		}
-    else {
-    
+		}else {
 			TextIO.putf("invalid date (%d)\n", date);
 		}
 	}
@@ -25,74 +22,49 @@ public class Weekdays {
 	
 	// Checks if given year is between 1582 and 2199
 	public static boolean validate(int year) {
-  
 		if(year >= 1582 && year <= 2199) {
-    
 			return true;
 		}
-    else {
-    
-		  return false;
-    }
+		return false;
 	}
 	
 	// Checks if a given month is valid (1-12)
 	// and if the year is 1582, if the month is valid (>=10)
 	public static boolean validate(int year, int month) {
-  
 		if(month > 0 && month <= 12) {
-    
 			if(year == 1582 && month < 10) {
-      
 				return false;
 			}
-      else {
-      
-			  return true;
-      }
+			return true;
 		}
-    else {
-    
-		  return false;
-    }
+		return false;
 	}
 	
 	// Checks if a given year is a leap year
 	public static boolean isLeap(int inYear) {
-  
 		if(inYear % 4 == 0) {
-    
 			if(inYear % 100 == 0) {
-      
 				if(inYear % 400 == 0) {
-        
 					return true;
-				}
-        else {
+				} else {
 					return false;
 				}
-			}
-      else {
+			} else {
 				return true;
 			}
-		}
-    else {
+		} else {
 			return false;
 		}
 	}
 	
 	// Returns the number of days in a month
 	public static int nDays(int month, int year) {
-  
 		String days = "312831303130313130313031";
 		int monthDays = 0;
 		
 		if(month == 1) {
-    
 			monthDays = Integer.parseInt(days.substring(0, 2));
-		}
-    else {
-    
+		} else {
 			monthDays = Integer.parseInt(days.substring(month*2 - 2, month*2));
 			if(month == 2 && isLeap(year)) {
 				monthDays += 1;
@@ -105,17 +77,11 @@ public class Weekdays {
 	// Checks if a given year is valid
 	// Valid dates are between Oct 15th 1582 and Dec 31st 2199
 	public static boolean validate(int year, int month, int day) {
-  
 		if(validate(year)) {
-    
 			if(validate(year, month)) {
-      
 				if(year == 1582 && month == 10 && day < 16) {
-        
 					return false;
-				}
-        else if(day <= nDays(month, year)) {
-        
+				} else if(day <= nDays(month, year)) {
 					return true;
 				}
 				return false;
