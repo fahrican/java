@@ -39,12 +39,16 @@ public class ReadArrayPartial {
 	}
 	
 	public static int[] push(int input, int[] array) {
+		
+		//increase total value by 1, because we want to add later one more
 		int[] newArray = new int[array.length + 1];
 		
 		for(int i = 0; i < array.length; i++) {
 			newArray[i] = array[i];
 		}
-		newArray[newArray.length - 1] = input;
+		//total number of values in our attribute array
+		//is the correct index number for the input value
+		newArray[array.length] = input;
 		return newArray;
 	}
 	
