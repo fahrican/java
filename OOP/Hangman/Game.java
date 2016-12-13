@@ -10,7 +10,7 @@ public class Game {
 		this.answer = answer;
 		hits = "";
 		misses = "";
-	}
+	}//end of constructor
 	
 	public boolean applyGuesses(char letter) {
 		
@@ -23,5 +23,19 @@ public class Game {
 		}
 		
 		return isHit;
-	}
+	}//end of method
+	
+	public String getCurrentProgress() {
+		
+		String progress = "";	
+		for (char letter : answer.toCharArray()) {
+			
+			char display = '-';
+			if (hits.indexOf(letter) != -1) {
+				display = letter;
+			}
+			progress += display;
+		}
+		return progress;
+	}//end of method
 }
