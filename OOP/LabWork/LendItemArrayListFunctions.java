@@ -83,7 +83,45 @@ public class LendItemArrayListFunctions {
 	
 	public static void sort(LendItemArrayList list, int order){
 		
-	}
-
+		int itemsSorted;
+		
+		for(itemsSorted = 1; itemsSorted < list.next; itemsSorted++) {
+			LendItem temp = list.lendItems[itemsSorted];
+			int location = itemsSorted - 1;
+			
+			while(location >= 0 && compare(list.lendItems[location], temp, order) > 0) {
+				list.lendItems[location + 1] = list.lendItems[location];
+				location--;
+			}
+			list.lendItems[location + 1] = temp;
+		}
+	}//end of method
+	
+	public static LendItemArrayList filterByDescription(LendItemArrayList list,String desc){
+		
+		LendItemArrayList tempObj = new LendItemArrayList();
+		tempObj.resizeable = true;
+		
+		for (int i = 0; i < list.next; i++) {
+			
+			if (list.lendItems[i].description.contains(desc)) {
+				
+				add(tempObj, list.lendItems[i]);
+			}
+		}
+		return tempObj;
+	}//end of method
+	
+	public static int findByID(LendItemArrayList list, int id){
+		
+		for (int i = 0; i < list.lendItems.length; i++) {
+			
+			if (list.lendItems[i].id == id) {
+				return i;
+			}
+		}
+		
+		return -1;
+	}//end of method
 	
 }//end of class
