@@ -4,117 +4,124 @@ import bwi.prog.utils.TextIO;
 import static bwi.prog1B.WS1617.wi16b027_Can.LabWork.LendItemFunctions.*;
 
 public class LendItemArrayListFunctions {
+	
+	public static boolean add(LendItemArrayList list, LendItem p) {
 
-	public static boolean add(LendItemArrayList list, LendItem p){
-		
 		if (list.next < list.lendItems.length) {
-			
+
 			list.lendItems[list.next] = p;
 			list.next++;
 			return true;
 		}
-		else {
-			
-			if (list.resizeable) {
-				
-			
-				LendItem[] tempArr = new LendItem[list.lendItems.length * 2];
 
-				for (int i = 0; i <= list.lendItems.length; i++) {
+		else if (list.resizeable) {
 
-					tempArr[i] = list.lendItems[i];
-				}
-
-				tempArr[list.lendItems.length] = p;
-				list.lendItems = tempArr;
-				list.next++;
-				return true;
+			LendItem[] newLendItem = new LendItem[list.lendItems.length * 2];
+			for (int i = 0; i < list.lendItems.length; i++) {
+				newLendItem[i] = list.lendItems[i];
 			}
+			list.lendItems = newLendItem;
+
+			list.lendItems[list.next] = p;
+			list.next++;
+			return true;
 		}
-		
 		return false;
-	}//end of method
+	}// end of method
 	
 	public static LendItem remove(LendItemArrayList list, int n){
 		
-		if (n < list.next || n < 0) {
+		if(n < list.next || n < 0) {
 			
-			LendItem[] tempArr = new LendItem[list.lendItems.length];
-			LendItem deletedItem = null;
+			LendItem[] newLendItems = new LendItem[list.lendItems.length];
+			LendItem deleted = new LendItem();
 			
 			for (int i = 0; i < list.next; i++) {
 				
-				if (i == n) {
-					deletedItem = list.lendItems[i];
+				if(i == n) {
+					deleted = list.lendItems[i];
 				}
-				else if (n < i) {
-					tempArr[i-1] = list.lendItems[i];
+				else if(i > n) {
+					newLendItems[i-1] = list.lendItems[i];
 				}
 				else {
-					tempArr[i] = list.lendItems[i];
+					newLendItems[i] = list.lendItems[i];
 				}
 			}
-			list.lendItems = tempArr;
+			list.lendItems = newLendItems;
 			list.next--;
-			return deletedItem;
-		}
+			
+			return deleted;
+			}
 		return null;
-		
-	}//end of method
-
+				
+	}// end of method
+	
 	public static int list(LendItemArrayList list, int format){
 		
+		int items = 0;
+		
 		if (list.next == 0) {
-			TextIO.putln("List empty.");
+			TextIO.putln("List empty");
 			return 0;
 		}
 		
-		TextIO.putln(lendItemHeadings(format));
-		TextIO.putln(lendItemSeperator(format));
+		TextIO.putln(lendItemHeadings(format)); 
+		TextIO.putln(lendItemSeparator(format)); 
+		
 		for (int i = 0; i < list.next; i++) {
-			TextIO.put(lendItemString(list.lendItems[i], format));
-			TextIO.putf("\t(%02d)\n", i);
+			
+			if (list.lendItems[i] == null) {
+				break;
+			}
+			TextIO.put(lendItemString(list.lendItems[i], format) + "(" + i + ")\n");
+			items++;
 		}
-		TextIO.putln();
-		TextIO.putf("%d LendItem(s) in list, %d free", list.next, list.lendItems.length - list.next);
-		TextIO.putln();
-		return list.lendItems.length;
-	}//end of method
+		TextIO.putln(lendItemSeparator(format));
+		TextIO.putf("%d LendItem(s) in list, %d free\n", items, list.lendItems.length - items);
+		
+		return items;
+		
+	}// end of method
 	
 	public static void sort(LendItemArrayList list, int order){
 		
-		int itemsSorted;
+		LendItem tempItem = new LendItem();
 		
-		for(itemsSorted = 1; itemsSorted < list.next; itemsSorted++) {
-			LendItem temp = list.lendItems[itemsSorted];
-			int location = itemsSorted - 1;
+		for (int i = 0; i < list.next - 1; i++) {
 			
-			while(location >= 0 && compare(list.lendItems[location], temp, order) > 0) {
-				list.lendItems[location + 1] = list.lendItems[location];
-				location--;
+			for (int j = 0; j < list.next - 1; j++) {
+				
+				if (compare(list.lendItems[j], list.lendItems[j+1], order) == 1) {
+					
+					tempItem = list.lendItems[j];
+					list.lendItems[j] = list.lendItems[j+1];
+					list.lendItems[j+1] = tempItem;
+				}
 			}
-			list.lendItems[location + 1] = temp;
 		}
-	}//end of method
+		
+	}// end of method
 	
 	public static LendItemArrayList filterByDescription(LendItemArrayList list,String desc){
 		
-		LendItemArrayList tempObj = new LendItemArrayList();
-		tempObj.resizeable = true;
+		LendItemArrayList descArr = new LendItemArrayList();
+		descArr.resizeable = true;
 		
 		for (int i = 0; i < list.next; i++) {
 			
 			if (list.lendItems[i].description.contains(desc)) {
 				
-				add(tempObj, list.lendItems[i]);
+				add(descArr, list.lendItems[i]);
 			}
 		}
-		return tempObj;
-	}//end of method
+		return descArr;
+		
+	}// end of method
 	
 	public static int findByID(LendItemArrayList list, int id){
 		
-		for (int i = 0; i < list.lendItems.length; i++) {
+		for (int i = 0; i < list.next; i++) {
 			
 			if (list.lendItems[i].id == id) {
 				return i;
@@ -122,6 +129,6 @@ public class LendItemArrayListFunctions {
 		}
 		
 		return -1;
-	}//end of method
+	}// end of method
 	
 }//end of class
