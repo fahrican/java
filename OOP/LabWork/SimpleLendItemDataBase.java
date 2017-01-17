@@ -9,7 +9,7 @@ public class SimpleLendItemDataBase {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		int userInput, format = 1;
+		int userInput, format = 1, counID = 0;
 		LendItemArrayList list = new LendItemArrayList();
 		
 		do {
@@ -20,6 +20,7 @@ public class SimpleLendItemDataBase {
 					+ "4) sort\n"
 					+ "5) filter\n"
 					+ "6) set format\n"
+					+ "7) dummy data\n"
 					+ "0) quit\n"
 					);
 			
@@ -39,7 +40,10 @@ public class SimpleLendItemDataBase {
 				
 			case 2:
 				TextIO.putf("your choice: %d\n", userInput);
-				LendItem newItem = scanLendItem();
+				LendItem newItem = new LendItem();
+				newItem = scanLendItem();
+				newItem.id = counID;
+				counID++;
 				if(add(list, newItem)){
 					TextIO.putln("1 item added.");
 				}
@@ -90,7 +94,23 @@ public class SimpleLendItemDataBase {
 						+ "Choose format:"
 						);
 				format = TextIO.getInt();
-				lendItemString(list.lendItems[format], format);
+				TextIO.putf("You have chosen format %d\n", format);;
+				break;
+				
+			case 7:
+				for (int i = 0; i < 25; i++) {
+					LendItem li = new LendItem();
+					li.id = list.next;
+					li.description = String.format("%c_description", ((int) (i
+					* Math.PI * 10000)) % 15 + 'A');
+					li.lender = String.format("Gustav_%02d", ((int) (i
+					* Math.PI * 1000000)) % 10);
+					li.lendDate = new Date();
+					li.lendDate.year = 2010 - ((int) (i * Math.PI * 100)) % 100;
+					li.lendDate.month = ((int) (i * Math.PI * 1000000)) % 12 + 1;
+					li.lendDate.day = ((int) (i * Math.PI * 100000000)) % 28 + 1;
+					add(list, li);
+				}
 				break;
 
 			default:

@@ -6,28 +6,28 @@ import static bwi.prog1B.WS1617.wi16b027_Can.LabWork.LendItemFunctions.*;
 public class LendItemArrayListFunctions {
 	
 	public static boolean add(LendItemArrayList list, LendItem p) {
-
-		if (list.next < list.lendItems.length) {
-
+		
+		if(list.next < list.lendItems.length) {
+			// list still has empty room
 			list.lendItems[list.next] = p;
 			list.next++;
 			return true;
 		}
-
-		else if (list.resizeable) {
-
-			LendItem[] newLendItem = new LendItem[list.lendItems.length * 2];
-			for (int i = 0; i < list.lendItems.length; i++) {
-				newLendItem[i] = list.lendItems[i];
-			}
-			list.lendItems = newLendItem;
-
-			list.lendItems[list.next] = p;
-			list.next++;
-			return true;
+		else {
+			// list is full
+			if(list.resizeable) {
+				LendItem[] newLendItems = new LendItem[list.lendItems.length * 2];
+				for(int i = 0; i < list.lendItems.length; i++) {
+					newLendItems[i] = list.lendItems[i];
+				}
+				newLendItems[list.lendItems.length] = p;
+				list.lendItems = newLendItems;
+				list.next++;
+				return true;
+			} 
+			return false;
 		}
-		return false;
-	}// end of method
+	}//end of method
 	
 	public static LendItem remove(LendItemArrayList list, int n){
 		
@@ -84,6 +84,7 @@ public class LendItemArrayListFunctions {
 		
 	}// end of method
 	
+	// BubbleSort algorithm
 	public static void sort(LendItemArrayList list, int order){
 		
 		LendItem tempItem = new LendItem();

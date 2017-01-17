@@ -12,6 +12,7 @@ public class LendItemFunctions {
 				TextIO.putln("The ID should be a three digit number.");
 				TextIO.put("Please, type a three digit number: ");
 				it.id = TextIO.getInt();
+				TextIO.putln(lendItemSeparator(format));
 			} while (it.id < 100 || it.id > 1000);
 		}
 		if (it.description.length() > 15) {
@@ -28,20 +29,20 @@ public class LendItemFunctions {
 		
 		case 1:
 			return String.format("%-3d", it.id) 
-					+ " " 
+					+ "\t" 
 					+ String.format("%-15s", it.description) 
-					+ " "
+					+ "\t"
 					+ String.format("%-10s", it.lender) 
-					+ " " 
+					+ "\t" 
 					+ dateString(it.lendDate) 
-					+ " " 
+					+ "\t" 
 					+ dateString(it.returnDate)
-					+ " " 
+					+ "\t" 
 					+ String.format("%-10s", it.owner);
 			
 		case 2:
-			return String.format("%-15s ", it.description)
-					+ String.format("%-10s", it.lender);
+			return String.format("%-15s\t", it.description)
+					+ String.format("%-10s\t", it.lender);
 			
 		case 3:
 			return String.format("\"%s\",", it.description)
@@ -98,28 +99,28 @@ public class LendItemFunctions {
 		
 		case 1:
 			String dash1 = "";
-			for (int i = 0; i <= 58; i++) {
+			for (int i = 0; i <= 77; i++) {
 				dash1 += "-";
 			}
 			return dash1;
 			
 		case 2:
 			String dash2 = "";
-			for (int i = 0; i <= 25; i++) {
+			for (int i = 0; i <= 22; i++) {
 				dash2 += "-";
 			}
 			return dash2;
 			
 		case 3:
 			String dash3 = "";
-			for (int i = 0; i <= 55; i++) {
+			for (int i = 0; i <= 69; i++) {
 				dash3 += "-";
 			}
 			return dash3;
 
 		default:
 			String dash = "";
-			for (int i = 0; i <= 55; i++) {
+			for (int i = 0; i <= 69; i++) {
 				dash += "-";
 			}
 			return dash;
@@ -350,34 +351,40 @@ public class LendItemFunctions {
 		return false;
 	}// end of method
 
-	public static LendItem scanLendItem(){
-		
-		LendItem userLendItem = new LendItem();
-		
+	public static LendItem scanLendItem() {
+		String desc = "", lender = "", owner = "";
 		do {
-			TextIO.put("Please, enter a description: ");
-			userLendItem.description = TextIO.getln();
-			if (userLendItem.description == null) {
-				TextIO.putln("description cannot be empty!");
+			TextIO.putf("description: ");
+			desc = TextIO.getln();
+			TextIO.putf("lender: ");
+			lender = TextIO.getln();
+			TextIO.putf("owner: ");
+			owner = TextIO.getln();
+
+			if (desc.isEmpty()) {
+				TextIO.putf("description cannot be empty!\n");
+				continue;
 			}
-			
-			TextIO.put("Please, enter a lender: ");
-			userLendItem.lender = TextIO.getln();
-			if (userLendItem.lender == null) {
-				TextIO.putln("lender cannot be empty!");
+			if (lender.isEmpty()) {
+				TextIO.putf("lender cannot be empty!\n");
+				continue;
 			}
 
-			TextIO.put("Please, enter a owner: ");
-			userLendItem.owner = TextIO.getln();
-			
-		} while (userLendItem.description == null && userLendItem.lender == null);
-		
-		userLendItem.lendDate = scanDate();
-		
-		userLendItem.returnDate = scanDate();
-		
-		return userLendItem;
-	}// end of method
+			break;
+		} while (true);
+
+		LendItem it = new LendItem();
+		it.description = desc;
+		it.lender = lender;
+		it.owner = owner;
+		TextIO.putf("lend date:\n");
+		it.lendDate = scanDate();
+		TextIO.putf("return date:\n");
+		it.returnDate = scanDate();
+
+		return it;
+	}
+
 	
 	public static Date scanDate(){
 		
