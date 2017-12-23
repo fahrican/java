@@ -19,11 +19,9 @@ public class Cipher {
 	/*
 	 * @param textToEncrypt is the String variable, which we want to encrypt
 	 * 
-	 * @param numberOfCharactersToRotate for instance the number is 4, so 'a' will
-	 * be an 'e'
+	 * @param numberOfCharactersToRotate for instance the number is 4, so 'a' will be an 'e'
 	 * 
-	 * @return charArrayToText, this variable has stored all modified characters
-	 * from the char array
+	 * @return charArrayToText, this variable has stored all modified characters from the char array
 	 */
 	public static void encryptMessage(String textToEncrypt, int numberOfCharactersToRotate) {
 
@@ -46,14 +44,12 @@ public class Cipher {
 	 * @param charArrayToEncrypt the original text to encrypt as char array
 	 * 
 	 * @param textOfLettersOrNumbers this paramters is a String either the ABC as
-	 * lower or uppercase letters or a just a text of numbers for instance
-	 * "0123456789"
+	 * lower or uppercase letters or a just a text of numbers for instance "0123456789"
 	 * 
-	 * @param numberOfCharactersToRotate for instance the number is 4, so 'a' will
-	 * be an 'e'
+	 * @param numberOfCharactersToRotate for instance the number is 4, so 'a' will be an 'e'
 	 * 
-	 * @return tempArr this is the modified char array, depends on the second
-	 * parameter of the method was all upper or lowercase or just numbers as text
+	 * @return tempArr this is the modified char array, depends on the second parameter of the method 
+	 * was all upper or lowercase or just numbers as text
 	 */
 	public static char[] changeChars(char[] charArrayToEncrypt, String textOfLettersOrNumbers,
 			int numberOfCharactersToRotate) {
