@@ -1,67 +1,78 @@
-package hackerrank;
+package hackerearth;
 
 import java.util.Scanner;
 
-public class Solution {
+public class Cipher {
 
 	public static void main(String[] args) {
 
 		Scanner scan = new Scanner(System.in);
 		String message = scan.next();
-		// int rotateNumber = scan.nextInt();
+		int numberOfCharactersToRotate = scan.nextInt();
+		scan.close();
+
 		// input: All-convoYs-9-be:Alert1.
 		// output: Epp-gsrzsCw-3-fi:Epivx5.
-		System.out.println("Epp-gsrzsCw-3-fi:Epivx5.");
-		encryptMessage(message);
-
-		scan.close();
+		encryptMessage(message, numberOfCharactersToRotate);
 	}
 
 	/*
-	 * @param text is the String variable, which we want to encrypt
+	 * @param textToEncrypt is the String variable, which we want to encrypt
 	 * 
-	 * @return
+	 * @param numberOfCharactersToRotate for instance the number is 4, so 'a' will
+	 * be an 'e'
+	 * 
+	 * @return charArrayToText, this variable has stored all modified characters
+	 * from the char array
 	 */
-	public static void encryptMessage(String textToEncrypt) {
+	public static void encryptMessage(String textToEncrypt, int numberOfCharactersToRotate) {
 
-		String textToEncryptAllUpperCase = textToEncrypt.toUpperCase();
-		char[] charArrayToEncrypt = textToEncryptAllUpperCase.toCharArray();
+		char[] charArrayToEncrypt = textToEncrypt.toCharArray();
 		String upperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		String lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
 		String numbers = "0123456789";
 
-		char[] test = changeChars(charArrayToEncrypt, upperCaseLetters);
-		String temp = "";
+		char[] test = changeChars(charArrayToEncrypt, upperCaseLetters, numberOfCharactersToRotate);
+		test = changeChars(charArrayToEncrypt, lowerCaseLetters, numberOfCharactersToRotate);
+		test = changeChars(charArrayToEncrypt, numbers, numberOfCharactersToRotate);
+		String charArrayToText = "";
 		for (char c : test) {
-			temp += c;
+			charArrayToText += c;
 		}
-		System.out.println(temp);
+		System.out.println(charArrayToText);
 	}
 
 	/*
-	 * @param charArrayToEncrypt
+	 * @param charArrayToEncrypt the original text to encrypt as char array
 	 * 
-	 * @param charArrayOfLettersOrNumbers
+	 * @param textOfLettersOrNumbers this paramters is a String either the ABC as
+	 * lower or uppercase letters or a just a text of numbers for instance
+	 * "0123456789"
 	 * 
-	 * @return
+	 * @param numberOfCharactersToRotate for instance the number is 4, so 'a' will
+	 * be an 'e'
+	 * 
+	 * @return tempArr this is the modified char array, depends on the second
+	 * parameter of the method was all upper or lowercase or just numbers as text
 	 */
-	public static char[] changeChars(char[] charArrayToEncrypt, String charArrayOfLettersOrNumbers) {
+	public static char[] changeChars(char[] charArrayToEncrypt, String textOfLettersOrNumbers,
+			int numberOfCharactersToRotate) {
 
 		char[] tempArr = charArrayToEncrypt;
 
 		for (int i = 0; i < charArrayToEncrypt.length; i++) {
 
-			for (int j = 0; j < charArrayOfLettersOrNumbers.length(); j++) {
+			for (int j = 0; j < textOfLettersOrNumbers.length(); j++) {
 
-				if (tempArr[i] == charArrayOfLettersOrNumbers.charAt(j)) {
+				if (tempArr[i] == textOfLettersOrNumbers.charAt(j)) {
 
-					if ((j + 4) >= charArrayOfLettersOrNumbers.length()) {
+					if ((j + numberOfCharactersToRotate) >= textOfLettersOrNumbers.length()) {
 
-						int index = (j + 4) - charArrayOfLettersOrNumbers.length();
-						tempArr[i] = charArrayOfLettersOrNumbers.charAt(index);
+						int index = (j + numberOfCharactersToRotate) - textOfLettersOrNumbers.length();
+						tempArr[i] = textOfLettersOrNumbers.charAt(index);
 						break;
 					} else {
-						tempArr[i] = charArrayOfLettersOrNumbers.charAt(j + 4);
+						tempArr[i] = textOfLettersOrNumbers.charAt(j + numberOfCharactersToRotate);
 						break;
 					}
 
@@ -71,4 +82,4 @@ public class Solution {
 		return tempArr;
 	}
 
-}// end of class Solution
+}
