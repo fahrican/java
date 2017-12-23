@@ -1,24 +1,6 @@
 package hackerrank;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-class Node {
-
-	int data;
-	Node next;
-
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return "this is a Node object";
-	}
-}
 
 public class Solution {
 
