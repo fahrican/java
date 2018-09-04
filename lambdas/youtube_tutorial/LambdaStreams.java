@@ -19,8 +19,9 @@ public class LambdaStreams {
                 new Person("Mathew", "Arnold", 39)
         );
 
-        people.stream().filter(person -> person.getLastname()
-                .startsWith("C")).forEach(System.out::println);
+        people.stream()
+            .filter(person -> person.getLastname().startsWith("C"))
+            .forEach(System.out::println);
     }
 
 }
